@@ -41,17 +41,26 @@ Pre-built binaries are available for download on [GitHub Releases](https://githu
 
 The following build procedure works on Linux:
 
-```
+```bash
 # Get PlatformIO (the toolchain we use for compiling)
-git clone https://github.com/probonopd/WirelessPrinting
-cd WirelessPrinting
-wget -c https://downloads.egenix.com/python/install-pyrun
-bash install-pyrun --python=3.5 pyrun/
-pyrun/bin/pip3 install -U platformio==4.2.1
 
-# Build the firmware (it downloads the needed libraries)
-pyrun/bin/platformio run
-find . -name "*firmware.bin"
+git clone https://github.com/Jovian-Dsouza/WirelessPrinting
+cd WirelessPrinting
+
+# Build and flash using PlatformIO
+```
+
+Note : Build errors can be resolved by manually switching to correct libraries
+```bash
+cd .pio/libdeps/d1_mini
+rm -rf ESPAsyncTCP AsyncTCP
+git clone https://github.com/me-no-dev/ESPAsyncTCP && cd ESPAsyncTCP && git checkout 7e9ed22
+git clone https://github.com/me-no-dev/AsyncTCP && cd AsyncTCP && git checkout 90715ae6
+
+cd ../nodemcuv2
+rm -rf ESPAsyncTCP AsyncTCP
+git clone https://github.com/me-no-dev/ESPAsyncTCP && cd ESPAsyncTCP && git checkout 7e9ed22
+git clone https://github.com/me-no-dev/AsyncTCP && cd AsyncTCP && git checkout 90715ae6
 ```
 
 ### Flashing from Linux
