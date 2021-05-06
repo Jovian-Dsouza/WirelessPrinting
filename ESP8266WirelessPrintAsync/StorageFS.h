@@ -15,7 +15,8 @@ class StorageFS {
   public:
     inline static void begin(const bool fastSD) {
       #if defined(ESP8266)
-        hasSD = SD.begin(SS, fastSD ? SD_SCK_MHZ(50) : SPI_HALF_SPEED); // https://github.com/esp8266/Arduino/issues/1853
+        //hasSD = SD.begin(SS, fastSD ? SD_SCK_MHZ(50) : SPI_HALF_SPEED); // https://github.com/esp8266/Arduino/issues/1853
+        hasSD = SD.begin(5, fastSD ? SD_SCK_MHZ(50) : SPI_HALF_SPEED); // Using GPIO5 instead of the default SS pin (for BoltIot Board)
       #elif defined(ESP32)
         SPI.begin(14, 2, 15, 13); // TTGO-T1 V1.3 internal microSD slot
         hasSD = SD.begin(SS, SPI, fastSD ? 50000000 : 4000000);
